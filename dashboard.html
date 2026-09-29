@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Student Dashboard | HIBIKI</title>
+<style>
+:root{--navy:#10243e;--blue:#174d82;--red:#c9273b;--ink:#1e293b;--muted:#64748b;--bg:#f5f8fc}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Noto Sans Bengali","Noto Sans",sans-serif;background:var(--bg);color:var(--ink);line-height:1.65}
+header{background:linear-gradient(120deg,#0d2038,#174d82);color:#fff;padding:16px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-size:1.1rem;font-weight:800;letter-spacing:.04em}.brand span{color:#f0cc78}nav{display:flex;gap:6px;flex-wrap:wrap}nav a{color:#eaf2fb;text-decoration:none;padding:7px 10px;border-radius:9px;font-size:.9rem}nav a:hover,nav a.active{background:#ffffff24}
+main{max-width:1100px;margin:26px auto;padding:0 16px}.hero{background:linear-gradient(120deg,#fff,#edf4fb);border:1px solid #dce7f2;border-radius:20px;padding:24px;margin-bottom:18px}.eyebrow{color:var(--red);font-weight:800;font-size:.8rem;letter-spacing:.08em}.hero h1{margin:5px 0;color:var(--navy);font-size:clamp(1.6rem,4vw,2.35rem);line-height:1.3}.hero p{margin:0;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.card{background:#fff;border:1px solid #e2e8f0;border-radius:15px;padding:18px;box-shadow:0 5px 18px #10243e0a}.card h2,.card h3{margin:0 0 7px;color:var(--navy)}.number{font-size:2rem;font-weight:800;color:var(--blue);line-height:1.3}.meta{color:var(--muted);font-size:.9rem}.bar{height:10px;background:#e2e8f0;border-radius:99px;overflow:hidden;margin:9px 0}.bar span{display:block;height:100%;background:#2c9a71;width:0;transition:width .2s}.btn{display:inline-block;background:var(--red);color:#fff;text-decoration:none;border:0;border-radius:10px;padding:10px 15px;font:inherit;font-weight:700;cursor:pointer}.btn.secondary{background:var(--navy)}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}.notice{background:#fff8e8;border:1px solid #f1d89c;border-radius:12px;padding:13px;margin:16px 0;color:#6b531d;font-size:.9rem}footer{text-align:center;padding:25px;color:var(--muted);font-size:.88rem}
+@media(max-width:560px){header{padding:14px 4%}nav{width:100%}nav a{padding:6px 8px;font-size:.82rem}.hero{padding:19px}}
+</style></head>
+<body>
+<header><div class="brand">HIBIKI <span>日本語</span></div><nav>
+<a href="index.html">হোম</a><a href="vocabulary.html">Vocabulary</a><a href="grammar.html">Grammar</a><a href="kanji.html">Kanji</a><a href="quiz.html">Quiz</a><a class="active" href="dashboard.html">Dashboard</a>
+</nav></header>
+<main>
+<section class="hero"><div class="eyebrow">STUDENT AREA</div><h1>আপনার শেখার অগ্রগতি</h1><p>এক জায়গা থেকে Vocabulary, Grammar, Kanji ও Quiz-এর অগ্রগতি দেখুন।</p></section>
+<div class="grid">
+<article class="card"><h3>Vocabulary</h3><div class="number" id="vcount">০</div><div class="meta">শেখা শব্দ</div><div class="bar"><span id="vbar"></span></div><div class="meta" id="vpercent">অগ্রগতি: ০%</div><p><a class="btn" href="vocabulary.html">শব্দ শিখুন</a></p></article>
+<article class="card"><h3>Grammar</h3><div class="number" id="gcount">০</div><div class="meta">সম্পন্ন পাঠ</div><div class="bar"><span id="gbar"></span></div><div class="meta" id="gpercent">অগ্রগতি: ০%</div><p><a class="btn" href="grammar.html">Grammar শিখুন</a></p></article>
+<article class="card"><h3>Kanji</h3><div class="number" id="kcount">০</div><div class="meta">শেখা কাঞ্জি</div><div class="bar"><span id="kbar"></span></div><div class="meta" id="kpercent">অগ্রগতি: ০%</div><p><a class="btn" href="kanji.html">Kanji শিখুন</a></p></article>
+<article class="card"><h3>Quiz</h3><div class="number" id="qscore">—</div><div class="meta">সর্বশেষ কুইজের স্কোর</div><p class="meta" id="qdetail">এখনো কোনো স্কোর সংরক্ষিত নেই।</p><p><a class="btn" href="quiz.html">কুইজ দিন</a></p></article>
+</div>
+<div class="notice"><b>নোট:</b> অগ্রগতি এই ডিভাইসের ব্রাউজারে সংরক্ষিত হয়। অন্য ডিভাইসে বা ব্রাউজারের ডেটা মুছে ফেললে একই তথ্য নাও দেখা যেতে পারে। Grammar ও Kanji-এর অগ্রগতি গণনার জন্য সংশ্লিষ্ট পেজে “শিখেছি” চিহ্নিত করার ফিচার এখনো যুক্ত করা হয়নি।</div>
+<div class="actions"><button class="btn secondary" onclick="loadData()">অগ্রগতি রিফ্রেশ</button><button class="btn" onclick="if(confirm('এই ডিভাইসের Hibiki শেখার অগ্রগতি মুছে ফেলবেন?')){['hibiki_vocab_learned','hibiki_grammar_learned','hibiki_kanji_learned','hibiki_last_quiz'].forEach(k=>localStorage.removeItem(k));loadData()}">অগ্রগতি মুছুন</button></div>
+</main><footer>HIBIKI Japanese Language Centre · 学習を続けましょう</footer>
+<script>
+const bn=n=>String(n).replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
+function loadData(){
+ let v=JSON.parse(localStorage.getItem("hibiki_vocab_learned")||"[]");
+ let g=JSON.parse(localStorage.getItem("hibiki_grammar_learned")||"[]");
+ let k=JSON.parse(localStorage.getItem("hibiki_kanji_learned")||"[]");
+ // Current published starter content has 58 vocabulary entries, 8 grammar patterns, and 12 kanji.
+ const sets=[["v",v,58],["g",g,8],["k",k,12]];
+ for(const [id,arr,total] of sets){let n=Math.min(arr.length,total),p=Math.round(n/total*100);document.getElementById(id+"count").textContent=bn(n);document.getElementById(id+"bar").style.width=p+"%";document.getElementById(id+"percent").textContent="অগ্রগতি: "+bn(p)+"%";}
+ let q=JSON.parse(localStorage.getItem("hibiki_last_quiz")||"null");
+ document.getElementById("qscore").textContent=q?bn(q.score)+" / "+bn(q.total):"—";
+ document.getElementById("qdetail").textContent=q?"সর্বশেষ কুইজের ফলাফল":"এখনো কোনো স্কোর সংরক্ষিত নেই।";
+}
+loadData();
+</script></body></html>
