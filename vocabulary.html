@@ -1,0 +1,27 @@
+<!doctype html><html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vocabulary | Hibiki</title><style>
+:root{--navy:#10243e;--blue:#174d82;--red:#c9273b;--gold:#d5ad58;--ink:#1e293b;--muted:#64748b;--bg:#f5f8fc;--card:#fff}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Noto Sans Bengali","Noto Sans",sans-serif;background:var(--bg);color:var(--ink);line-height:1.65}
+header{background:linear-gradient(120deg,#0d2038,#174d82);color:#fff;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{font-size:1.15rem;font-weight:800;letter-spacing:.04em}.brand span{color:#f0cc78}
+nav{display:flex;gap:8px;flex-wrap:wrap}nav a{color:#eaf2fb;text-decoration:none;padding:7px 11px;border-radius:9px;font-size:.92rem}nav a:hover,nav a.active{background:#ffffff24}
+main{max-width:1100px;margin:28px auto;padding:0 16px}.hero{background:linear-gradient(120deg,#fff,#edf4fb);border:1px solid #dce7f2;border-radius:20px;padding:26px;margin-bottom:20px}
+.eyebrow{color:var(--red);font-weight:800;font-size:.82rem;letter-spacing:.08em}.hero h1{margin:5px 0 8px;color:var(--navy);font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.25}.hero p{margin:0;color:var(--muted)}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.toolbar input,.toolbar select{padding:11px 13px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;font:inherit;min-width:180px;flex:1}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:14px}.card{background:var(--card);border:1px solid #e2e8f0;border-radius:15px;padding:18px;box-shadow:0 5px 18px #10243e0a}.card h2,.card h3{margin:0 0 8px;color:var(--navy)}.jp{font-size:1.35rem;font-weight:800;color:var(--blue)}.meta{color:var(--muted);font-size:.9rem}.pill{display:inline-block;background:#edf4fb;color:var(--blue);padding:3px 9px;border-radius:99px;font-size:.78rem;font-weight:700;margin:4px 4px 0 0}
+.btn{display:inline-block;background:var(--red);color:#fff;text-decoration:none;border:0;border-radius:10px;padding:10px 15px;font:inherit;font-weight:700;cursor:pointer}.btn.secondary{background:var(--navy)}.empty{display:none;text-align:center;padding:24px;color:var(--muted)}footer{text-align:center;padding:28px 16px;color:var(--muted);font-size:.88rem}
+@media(max-width:560px){header{padding:15px 4%}nav{width:100%}nav a{padding:6px 8px;font-size:.85rem}.hero{padding:20px}.toolbar input,.toolbar select{min-width:100%}}
+</style></head><body><header><div class="brand">HIBIKI <span>日本語</span></div><nav>
+<a href="index.html">হোম</a><a href="vocabulary.html" class="active">Vocabulary</a><a href="grammar.html">Grammar</a><a href="kanji.html">Kanji</a>
+</nav></header>
+<main><section class="hero"><div class="eyebrow">JAPANESE VOCABULARY</div><h1>শব্দভান্ডার শিখুন, প্রতিদিন একটু একটু করে</h1><p>Minna no Nihongo ভিত্তিক নমুনা শব্দ। সার্চ করে জাপানি, রোমাজি বা বাংলা অর্থ খুঁজুন।</p></section>
+<div class="toolbar"><input id="search" placeholder="শব্দ / Romaji / বাংলা অর্থ খুঁজুন…"><select id="lesson"><option value="all">সব লেসন</option><option value="1">Lesson 1</option><option value="2">Lesson 2</option><option value="3">Lesson 3</option></select></div>
+<div class="grid" id="list"></div><p class="empty" id="empty">কোনো শব্দ পাওয়া যায়নি।</p>
+</main><footer>HIBIKI Japanese Language Centre · শেখা শুরু হোক আজ থেকেই 🇯🇵</footer>
+<script>
+const words=[
+{l:1,j:"わたし",r:"watashi",b:"আমি",e:"I"},{l:1,j:"あなた",r:"anata",b:"আপনি / তুমি",e:"you"},{l:1,j:"せんせい",r:"sensei",b:"শিক্ষক",e:"teacher"},{l:1,j:"がくせい",r:"gakusei",b:"শিক্ষার্থী",e:"student"},{l:1,j:"にほん",r:"nihon",b:"জাপান",e:"Japan"},
+{l:2,j:"これ",r:"kore",b:"এটি",e:"this"},{l:2,j:"それ",r:"sore",b:"ওটি (কাছের)",e:"that"},{l:2,j:"ほん",r:"hon",b:"বই",e:"book"},{l:2,j:"じしょ",r:"jisho",b:"অভিধান",e:"dictionary"},{l:2,j:"かばん",r:"kaban",b:"ব্যাগ",e:"bag"},
+{l:3,j:"ここ",r:"koko",b:"এখানে",e:"here"},{l:3,j:"そこ",r:"soko",b:"সেখানে",e:"there"},{l:3,j:"きょうしつ",r:"kyoushitsu",b:"শ্রেণিকক্ষ",e:"classroom"},{l:3,j:"としょかん",r:"toshokan",b:"লাইব্রেরি",e:"library"},{l:3,j:"うけつけ",r:"uketsuke",b:"রিসেপশন",e:"reception"}
+];
+function render(){let q=search.value.toLowerCase().trim(),l=lesson.value;let a=words.filter(x=>(l==="all"||x.l==l)&&[x.j,x.r,x.b,x.e].some(v=>v.toLowerCase().includes(q)));list.innerHTML=a.map(x=>`<article class="card"><span class="pill">Lesson ${x.l}</span><div class="jp">${x.j}</div><div><b>${x.r}</b></div><h3>${x.b}</h3><div class="meta">${x.e}</div></article>`).join("");empty.style.display=a.length?"none":"block"}search.addEventListener("input",render);lesson.addEventListener("change",render);render();
+</script></body></html>
